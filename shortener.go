@@ -22,18 +22,23 @@ func addShortenedUrl(w http.ResponseWriter, r *http.Request) {
 		}
 		alias := r.FormValue("alias")
 		original := r.FormValue("original")
-		fmt.Printf("%s", alias)
-		fmt.Printf("%s", original)
+		fmt.Printf("%s\n", alias)
+		fmt.Printf("%s\n", original)
 
 		entry_MAP[alias] = UrlEntry{AliasUrl: alias, OriginalUrl: original}
 	default:
 		http.Error(w, "400 bad request", http.StatusBadRequest)
 	}
-	fmt.Printf("New path has been added.")
+	fmt.Printf("New path has been added.\n")
 }
 
 func redirectUrl(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("Redirected!")
+	if key, ok := entry_MAP[r.PathValue("shortPath")]; ok {
+		http.Redirect(w, r, key.OriginalUrl, http.StatusTemporaryRedirect)
+	} else {
+		http.Error(w, "404 not found", http.StatusNotFound)
+	}
+	fmt.Printf("Redirected!\n")
 }
 
 func main() {
