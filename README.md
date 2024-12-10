@@ -10,8 +10,8 @@ Currently overwrites existing entries, does not check for uniqueness.
 Send a POST request to `http://127.0.0.1:8080/addUrl`
 
 Query parameters:
-- alias: the desired short URL for an application
-- original: the original URL to access using the alias
+- `alias`: the desired short URL for an application
+- `original`: the original URL to access using the alias
 
 ### Accessing an alias:
 
